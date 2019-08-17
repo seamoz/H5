@@ -21,7 +21,8 @@
           {{item || '&nbsp;'}}
         </div>
       </div>
-      <p style="color: #169BD5;">重新发送</p>
+      <p style="color: #169BD5;" v-if="verifyCode=='重新发送'" @click="verifyCodef()">{{verifyCode}}</p>
+      <p style="color: #169BD5;" v-if="verifyCode!='重新发送'" >{{verifyCode}}</p>
     </div>
 
     <div>
@@ -46,19 +47,70 @@
         phone: '',
         show: true,
         verify: '',
+        verifyCode:90
       }
     },
     mounted() {
       this.phone = store.state.phone;
+      // 获得验证码
+      this.$http.get("/user/verificationPhone?phone=" + this.phone).then(res => {
+        this.$toast(res.msg);
+        if (res.state) {
+          //设置90秒的读秒时间
+          var time = 90;
+          //调用读秒方法
+          this.setTime(time);
+        }else{
+          this.$router.push("/phoneRegister");
+        }
+      });
     },
     methods:{
+      verifyCodef(){
+        var this_ = this;
+        this.$http.get("/user/verificationPhone?phone=" + this.phone).then(res => {
+          if (res.state) {
+            console.log(res.msg);
+            //设置90秒的读秒时间
+            var time = 90;
+            //调用读秒方法
+            this_.setTime(time);
+          }
+        });
+      },
+      setTime(time) {
+        //保存当前this对象
+        var this_ = this;
+        if(this_.verifyCode == "重新发送"){
+          this_.verifyCode = time;
+        }
+        //开始读秒
+        setTimeout(function (){
+          //console.log(time);
+          this_.verifyCode = time;
+          if(time == -1){
+            //在给它变回来
+            this_.verifyCode="重新发送";
+            return;
+          }
+          time--;
+          this_.setTime(time);
+        },1000);
+        
+      },
       onClickLeft() {
+        //console.log(this.verify);
         this.$router.push("/phoneRegister");
       },
       onInput(value) {
+        console.log(value+"   "+this.verify);
         if(this.verify.length == 5){
-          confirm("注册成功");
-          this.$router.push("/setPassword");
+          this.$http.get("/user/judgePhoneVerificationCode?phone=" + this.phone +"&verificationCode="+ this.verify+value).then(res => {
+            this.$toast(res.msg);
+            if (res.state) {
+              this.$router.push("/setPassword");
+            }
+          });
         }
       },
     },

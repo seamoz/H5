@@ -88,8 +88,14 @@
           return;
         }
 
-        this.$toast("注册成功，返回登录页面");
-        this.$router.push("/");
+        //开始发送请求 注册
+        this.$http.get("/user/judgeEmailVerificationCode?userName="+this.username+"&password="+this.password+"&email="+this.email+"&verificationCode="+this.verify).then(res => {
+          if (res.state) {
+            this.$toast("注册成功，返回登录页面");
+            this.$router.push("/");
+          }
+        });
+
       },
       onClickLeft() {
         this.$router.push("/phoneRegister");
@@ -116,17 +122,24 @@
             这里写发送请求
             这里写发送请求
         */
-        this.disabled = 'disabled';
-        let time = 60000;
-        let l = setInterval(()=>{
-          time-=1000;
-          this.verifyMsg = time/1000;
-          if(time == 0){//修改这里可以改变等待时常
-            this.verifyMsg = 0;
-            this.disabled = 'xxx';
-            clearInterval(l);
+
+        //发送邮箱验证码
+        this.$http.get("/user/verificationEmail?email=" + this.email).then(res => {
+          console.log(res.msg);
+          if (res.state) {
+            this.disabled = 'disabled';
+            let time = 60000;
+            let l = setInterval(()=>{
+              time-=1000;
+              this.verifyMsg = time/1000;
+              if(time == 0){//修改这里可以改变等待时常
+                this.verifyMsg = 0;
+                this.disabled = 'xxx';
+                clearInterval(l);
+              }
+            },"1000"); 
           }
-        },"1000");
+        });
       },
     },
     data(){

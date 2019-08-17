@@ -27,7 +27,13 @@
 </template>
 
 <script>
+  //需要导入vuex的数据管理
+  import store from '@/vuex/store'
+
   export default {
+    mounted() {
+      this.phone = store.state.phone;
+    },
     methods:{
       onClickLeft() {
         this.$router.push("/verify");
@@ -37,13 +43,18 @@
           this.$notify("请输入密码");
           return;
         }
-        this.$toast("注册成功");
-        this.$router.push("/");
+        this.$http.get("/user/setPasswordByUserPhone?phone=" + this.phone +"&password="+ this.password).then(res => {
+          this.$toast(res.msg);
+          if (res.state) {
+            this.$router.push("/");
+          }
+        });
       }
     },
     data(){
       return {
         password: '',
+        phone:''
       }
     }
   }
