@@ -14,7 +14,7 @@
           <van-cell class="fSize" title="状态" :value="info.disposeState" />
           <van-cell class="fSize" title="上传时间:" :value="info.publishTime" />
           <van-cell class="fSize" title="处理时间:" :value="info.disposeTime" />
-          <van-cell class="fSize" title="类型:" :value="info.faulType" />
+          <van-cell class="fSize" title="类型:" :value="info.faultType" />
           <p style="text-align: center;margin-top: 10%;">备注</p>
           <van-field
               v-model="info.remark"
@@ -33,6 +33,27 @@
 
 <script>
   export default {
+  mounted() {
+      console.log(this.$route)
+			console.log(this.$route.query.bicycleNum)
+				this.$http.get("bikes/succeed?id="+this.$route.query.bicycleNum).then(res =>{
+						console.log(res)
+						if(res.error_code == 200){
+							this.$notify(res.meg);
+							
+							var dateee = new Date(res.data.publishTime).toJSON();
+							res.data.publishTime = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+							var dateee = new Date(res.data.disposeTime).toJSON();
+							res.data.disposeTime = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+							
+							
+							this.info = res.data;
+						}else{
+							this.$notify(res.meg);
+						}
+				});
+			
+    },
     mounted() {
       console.log(this.$route)
     },
@@ -44,12 +65,12 @@
     data(){
       return {
         info: {
-          "bicycleNum": "12154545",
-          "disposeState": "已处理",
-          "publishTime": "2018年9月11日 09:26:02",
-          "disposeTime": "2018年9月12日 09:26:02" ,
-          "faulType": "锁",
-          "remark": "锁被人恶意损坏asdassadsadsadsadasdsadsada",
+          "bicycleNum": "",
+          "disposeState": "",
+          "publishTime": "",
+          "disposeTime": "" ,
+          "faultType": "",
+          "remark": "",
         }
       }
     }
