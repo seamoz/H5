@@ -70,7 +70,12 @@
     },
     data(){
       return {
-        info: []
+        info: [{
+              "id":,
+              "bicycleNum": "",
+              "publishTime": "",
+              "disposeState": ""
+            }]
       }
     },
   }
