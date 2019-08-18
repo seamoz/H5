@@ -23,19 +23,19 @@
     font-size: 17px;
     font-weight: bold;">请选择单车具体故障</p>
 
-        <div>
+       <div>
           <div style="width: 313px; margin: 0 auto;">
             <div style="margin-bottom: 10px;" class="mm">
-              <div><img @click="options(1)" :class="{click_img:option==1}" src="../../static/tyre.png" alt=""><br>轮胎</div>
-              <div><img @click="options(2)" :class="{click_img:option==2,m:true}" style="margin-right: 0;" src="../../static/seat.png" alt=""><br>座位</div>
-              <div><img @click="options(3)" :class="{click_img:option==3,m:true}" src="../../static/chain.png" alt=""><br>链条</div>
-              <div><img @click="options(4)" :class="{click_img:option==4}" src="../../static/brake.png" alt=""><br>刹车</div>
+              <div><img @click="options('轮胎')" :class="{click_img:option=='轮胎'}" src="../../static/tyre.png" alt=""><br>轮胎</div>
+              <div><img @click="options('座位')" :class="{click_img:option=='座位',m:true}" style="margin-right: 0;" src="../../static/seat.png" alt=""><br>座位</div>
+              <div><img @click="options('链条')" :class="{click_img:option=='链条',m:true}" src="../../static/chain.png" alt=""><br>链条</div>
+              <div><img @click="options('刹车')" :class="{click_img:option=='刹车'}" src="../../static/brake.png" alt=""><br>刹车</div>
             </div>
             <div class="mm">
-              <div><img @click="options(5)" :class="{click_img:option==5}" src="../../static/foot.png" alt=""><br>脚踏板</div>
-              <div><img @click="options(6)" :class="{click_img:option==6,m:true}" style="margin-right: 0;" src="../../static/lock.png" alt=""><br>锁</div>
-              <div><img @click="options(7)" :class="{click_img:option==7,m:true}" src="../../static/code.png" alt=""><br>二维码</div>
-              <div><img @click="options(8)" :class="{click_img:option==8}" src="../../static/else.png" alt=""><br>其他部位</div>
+              <div><img @click="options('脚踏板')" :class="{click_img:option=='脚踏板'}" src="../../static/foot.png" alt=""><br>脚踏板</div>
+              <div><img @click="options('锁')" :class="{click_img:option=='锁',m:true}" style="margin-right: 0;" src="../../static/lock.png" alt=""><br>锁</div>
+              <div><img @click="options('二维码')" :class="{click_img:option=='二维码',m:true}" src="../../static/code.png" alt=""><br>二维码</div>
+              <div><img @click="options('其他部位')" :class="{click_img:option=='其他部位'}" src="../../static/else.png" alt=""><br>其他部位</div>
             </div>
           </div>
         </div>
@@ -92,14 +92,26 @@
         this.option=t;
       },
       submit(){
-        this.$notify("上报失败");
-        let info = {
-          userId: store.state.id,
-          bicycleNum: this.bicycleNum,
-          faultType: this.option,
-          remark: this.message
-        };
-        this.$router.push({path:'/reportTheSuccess',query:{info}});
+         var _this = this;
+
+          this.$http.post("/bikes/malfunction",{
+            userId:1, /* store.state.id, */
+            bicycleNum: _this.bicycleNum,
+            faultType:_this.option,
+            remark:_this.message
+          })
+          .then(res =>{
+
+            if(res.error_code == 200){
+              _this.$notify(res.meg);
+
+              let info = res.data.id;
+              _this.$router.push({path:'/reportTheSuccess',query:{info}});
+
+            }else{
+              _this.$notify(res.meg);
+            }
+          });
       }
     }
   }
