@@ -44,7 +44,7 @@
   export default {
 		mounted() {
 			console.log("nihaha  "+ store.state.id)
-			this.$http.get("/bikes/history-malfunction?userId="+1).then(res =>{
+			this.$http.get("/bikes/history-malfunction?userId="+store.state.id).then(res =>{
 					console.log(res)
 					if(res.error_code == 200){
 						this.$notify(res.meg);
