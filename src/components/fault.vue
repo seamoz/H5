@@ -95,7 +95,7 @@
          var _this = this;
 
           this.$http.post("/bikes/malfunction",{
-            userId:1, /* store.state.id, */
+            userId:store.state.id,
             bicycleNum: _this.bicycleNum,
             faultType:_this.option,
             remark:_this.message
