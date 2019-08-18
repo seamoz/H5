@@ -42,6 +42,24 @@
 
 <script>
   export default {
+		mounted() {
+			console.log("nihaha  "+ store.state.id)
+			this.$http.get("/bikes/history-malfunction?userId="+1).then(res =>{
+					console.log(res)
+					if(res.error_code == 200){
+						this.$notify(res.meg);
+						for (var i = 0; i < res.data.length-1; i++) {
+							var datee = new Date(res.data[i].publishTime).toJSON();
+							res.data[i].publishTime = new Date(+new Date(datee)+8*3600*1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+							
+						}
+						
+					this.info = res.data;
+					}else{
+						this.$notify(res.meg);
+					}
+				});
+		},  
     methods:{
       onClickLeft() {
         this.$router.push('/fault');
@@ -52,18 +70,7 @@
     },
     data(){
       return {
-        info: [{
-              "id":1,
-              "bicycleNum": "12154545",
-              "publishTime": "2018年8月12日 09:26:02",
-              "disposeState": "处理中"
-            },
-            {
-              "id":2,
-              "bicycleNum": "12154545",
-              "publishTime": "2018年8月12日 09:26:02",
-              "disposeState": "已处理"
-            }]
+        info: []
       }
     },
   }
