@@ -20,6 +20,7 @@ import { Row, Col } from 'vant';
 import { Tabbar, TabbarItem } from 'vant';
 import { DropdownMenu, DropdownItem } from 'vant';
 import { List } from 'vant';
+import { Dialog } from 'vant';
 
 Vue.use(List);
 Vue.use(DropdownMenu).use(DropdownItem);
@@ -33,6 +34,7 @@ Vue.prototype.$notify = Notify;
 Vue.use(Cell).use(CellGroup);
 Vue.use(Button);
 Vue.use(Field);
+Vue.use(Dialog);
 Vue.use(BaiduMap, {
   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
   ak: 'roIrGvFEF1GM68ZMDySgRamoUbPFmOkL'
