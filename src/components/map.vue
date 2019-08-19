@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<van-nav-bar title="磐石单车" style="width: 100%;" />
-		<baidu-map class="map" center="深圳" :zoom="zoom" @ready="handler">
+		<baidu-map class="map" :center="center" :zoom="zoom" @ready="handler">
 			<!-- 缩放地图 -->
 			<bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
 			<!-- 定位 -->
@@ -29,7 +29,7 @@
 		data() {
 			return {
 				center:{lng:0,lat:0},
-				zoom: 14
+				zoom: 19
 			}
 		},
 		mounted() {},
@@ -39,8 +39,8 @@
 				var ka = map;
 				console.log(map)
 				console.log(ka);
-				this.center.lng = 114.064552
-				this.center.lat = 22.548456
+				this.center.lng = 114.090249
+				this.center.lat = 22.730691
 			}
 		}
 	}
