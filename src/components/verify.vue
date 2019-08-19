@@ -28,7 +28,7 @@
     <div>
       <van-number-keyboard
         :show="show"
-        :maxlength="6"
+        :maxlength="6"`
         @input="onInput"
         v-model="verify"
       />
@@ -53,7 +53,7 @@
     mounted() {
       this.phone = store.state.phone;
       // 获得验证码
-      this.$http.get("/user/verificationPhone?phone=" + this.phone).then(res => {
+      this.$http.get("/user/sendPhoneMessage?phone=" + this.phone + "&state=0").then(res => {
         this.$toast(res.msg);
         if (res.state) {
           //设置90秒的读秒时间
@@ -68,7 +68,7 @@
     methods:{
       verifyCodef(){
         var this_ = this;
-        this.$http.get("/user/verificationPhone?phone=" + this.phone).then(res => {
+        this.$http.get("/user/sendPhoneMessage?phone=" + this.phone + "&state=0").then(res => {
           if (res.state) {
             console.log(res.msg);
             //设置90秒的读秒时间

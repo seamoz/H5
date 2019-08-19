@@ -124,7 +124,7 @@
         */
 
         //发送邮箱验证码
-        this.$http.get("/user/verificationEmail?email=" + this.email).then(res => {
+        this.$http.get("/user/sendMessage?email=" + this.email + "&state=0").then(res => {
           console.log(res.msg);
           if (res.state) {
             this.disabled = 'disabled';

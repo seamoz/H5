@@ -38,8 +38,14 @@
       },
       next_step(){
         this.changePhone(this.phone);
-        confirm("验证手机号码是否重复");
-        this.$router.push('/verify');
+
+        this.$http.get("/user/judgePhone?phone=" + this.phone).then(res => {
+          if (!res.state) {
+            this.$toast(res.msg);
+          }else{
+            this.$router.push('/verify');
+          }
+        });
       },
       email(){
         this.$router.push('/emailRegister');
