@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Axios from 'axios'
+import { RadioGroup, Radio } from 'vant';
 
 // 导入 vant 的 css
 import 'vant/lib/index.css';
@@ -39,7 +41,10 @@ Vue.use(BaiduMap, {
   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
   ak: 'roIrGvFEF1GM68ZMDySgRamoUbPFmOkL'
 })
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.prototype.$axios = Axios;
+Vue.use(RadioGroup);
+Vue.use(Radio);
 
 // vuex
 import store from './vuex/store.js'
