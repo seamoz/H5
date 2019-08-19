@@ -33,6 +33,7 @@
     </van-row>
 
     <van-tabbar route>
+      <van-tabbar-item to="/map" icon="photo-o">地图</van-tabbar-item>
       <van-tabbar-item to="/index" icon="home-o">骑车</van-tabbar-item>
       <van-tabbar-item to="/cycling" icon="search">骑行中</van-tabbar-item>
       <van-tabbar-item to="/fault" icon="friends-o">故障</van-tabbar-item>
