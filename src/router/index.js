@@ -21,6 +21,8 @@ import SettingPayPassword from '@/components/settingPayPassword'
 import ConfidentialPayment from '@/components/confidentialPayment'
 import ReturnTheDepositMoney from '@/components/returnTheDepositMoney'
 import ChangeWalletPassword from '@/components/changeWalletPassword'
+import RideDeduction from '@/components/rideDeduction'
+import ReportTheAbnormal from '@/components/reportTheAbnormal'
 
 Vue.use(Router)
 
@@ -125,6 +127,16 @@ export default new Router({
       path: '/cycling',
       name: 'cycling',
       component: Cycling
+    },
+		{
+      path: '/rideDeduction',
+      name: 'rideDeduction',
+      component: RideDeduction
+    },
+		{
+      path: '/reportTheAbnormal',
+      name: 'reportTheAbnormal',
+      component: ReportTheAbnormal
     },
     {
       path: '/fault',
