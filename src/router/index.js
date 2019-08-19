@@ -18,11 +18,29 @@ import MyInfo from '@/components/myInfo'
 import MyJourney from '@/components/myJourney'
 import Route from '@/components/route'
 import SettingPayPassword from '@/components/settingPayPassword'
+import ConfidentialPayment from '@/components/confidentialPayment'
+import ReturnTheDepositMoney from '@/components/returnTheDepositMoney'
+import ChangeWalletPassword from '@/components/changeWalletPassword'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+		  path: '/changeWalletPassword',
+		  name: 'changeWalletPassword',
+		  component: ChangeWalletPassword
+		},
+		{
+		  path: '/returnTheDepositMoney',
+		  name: 'returnTheDepositMoney',
+		  component: ReturnTheDepositMoney
+		},
+		{
+		  path: '/confidentialPayment',
+		  name: 'confidentialPayment',
+		  component: ConfidentialPayment
+		},
     {
       path: '/settingPayPassword',
       name: 'settingPayPassword',
