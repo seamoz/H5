@@ -43,7 +43,6 @@
 <script>
   export default {
 		mounted() {
-			console.log("nihaha  "+ store.state.id)
 			this.$http.get("/bikes/history-malfunction?userId="+store.state.id).then(res =>{
 					console.log(res)
 					if(res.error_code == 200){
@@ -71,7 +70,7 @@
     data(){
       return {
         info: [{
-              "id":,
+              "id":store.state.id,
               "bicycleNum": "",
               "publishTime": "",
               "disposeState": ""
