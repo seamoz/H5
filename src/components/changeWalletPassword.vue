@@ -39,8 +39,6 @@
 			alterPayPassword:this.alterPayPassword
 		})
 		.then(res =>{
-			console.log(res);
-			
 			if(res.error_code == 200){
 				this.$notify(res.meg);
 			
@@ -49,12 +47,7 @@
 				this.$notify(res.meg);
 			}
 		});
-		
-		
-		
-		
-      }
-	  
+	 }
     },
     data() {
       return {
