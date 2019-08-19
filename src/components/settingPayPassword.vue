@@ -4,7 +4,7 @@
 
     <img style="display: block; margin: 0 auto;" src="../../static/lock2.png" alt="">
     <div style="text-align: center; margin: 20px 0;">
-      您好: {{ username || '狗比用户' }}
+      您好， {{ username || '请完善个人资料' }}
     </div>
 
     <van-cell-group>
@@ -31,8 +31,20 @@
           this.$notify("密码不一致");
           return;
         }
-        this.$notify("成功设置支付密码");
-        this.$router.push('/');
+       
+				this.$http.post("/paymentCode",{
+					userId:store.state.id,
+					payPassword: this.payPassword
+				})
+				.then(res =>{
+					if(res.error_code == 200){
+						this.$notify(res.meg);
+					
+						this.$router.push('/myWalletMain');
+					}else{
+						this.$notify(res.meg);
+					}
+				});
       }
     },
     data() {
